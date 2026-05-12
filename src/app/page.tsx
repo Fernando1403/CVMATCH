@@ -1,65 +1,63 @@
-import Image from "next/image";
+import Link from "next/link";
+import { ArrowRight, Sparkles } from "lucide-react";
+import { Header } from "@/components/layout/Header";
+import { Footer } from "@/components/layout/Footer";
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
+    <div className="flex flex-col min-h-screen">
+      <Header />
+
+      <main className="flex-grow pt-32 pb-20">
+        {/* Hero Section */}
+        <section className="max-w-7xl mx-auto px-6 py-20 flex flex-col items-center text-center">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border mb-10">
+            <span className="flex h-2.5 w-2.5 rounded-full bg-accent animate-pulse"></span>
+            <span className="text-sm font-bold text-muted uppercase tracking-wide">2 CVs grátis para começar</span>
+          </div>
+          
+          <h1 className="font-display text-5xl md:text-7xl font-bold max-w-4xl leading-tight mb-8">
+            Seu currículo com <span className="text-accent relative inline-block">
+              match perfeito
+              <div className="absolute -bottom-2 left-0 right-0 h-1 bg-accent/30 rounded-full blur-sm"></div>
+            </span> para cada vaga.
           </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
+          
+          <p className="text-lg md:text-2xl text-muted max-w-3xl mb-12 leading-relaxed">
+            A inteligência artificial que entende sua trajetória e cria um PDF profissional otimizado para a vaga exata que você deseja. Aumente suas chances de entrevista.
           </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+          
+          <div className="flex flex-col sm:flex-row gap-6 w-full justify-center">
+            <Link href="/auth/cadastro" className="flex items-center justify-center gap-2 bg-accent hover:bg-accent-hover text-background px-10 py-5 rounded-full font-bold text-xl transition-all transform hover:scale-105 shadow-[0_0_30px_rgba(0,200,151,0.2)]">
+              Gerar currículo agora <ArrowRight size={24} />
+            </Link>
+            <Link href="/como-funciona" className="bg-secondary hover:bg-card text-white border border-border px-10 py-5 rounded-full font-bold text-xl transition-colors flex items-center justify-center">
+              Como funciona
+            </Link>
+          </div>
+          
+          {/* Mockup / Dashboard Preview */}
+          <div className="mt-24 w-full max-w-5xl rounded-2xl border border-border bg-card shadow-2xl overflow-hidden relative group">
+             <div className="absolute inset-0 bg-accent/5 opacity-0 group-hover:opacity-100 transition-opacity pointer-events-none"></div>
+             <div className="h-12 border-b border-border bg-secondary flex items-center px-4 gap-2">
+                <div className="w-3 h-3 rounded-full bg-red-500/20"></div>
+                <div className="w-3 h-3 rounded-full bg-yellow-500/20"></div>
+                <div className="w-3 h-3 rounded-full bg-green-500/20"></div>
+                <div className="ml-4 flex-1 h-6 bg-primary rounded-md opacity-50"></div>
+             </div>
+             <div className="p-8 aspect-video flex items-center justify-center bg-primary/50 relative overflow-hidden">
+                <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-accent/10 via-primary to-primary"></div>
+                <div className="relative z-10 text-center border border-border bg-card/80 backdrop-blur-md p-12 rounded-3xl shadow-2xl transform transition-transform group-hover:scale-105">
+                  <Sparkles className="w-20 h-20 text-accent mx-auto mb-6 opacity-80" />
+                  <p className="text-white font-display text-3xl font-bold mb-2">Dashboard e Preview do CV</p>
+                  <p className="text-muted text-lg">A interface que vai colocar você na frente dos outros candidatos.</p>
+                </div>
+             </div>
+          </div>
+        </section>
       </main>
+
+      <Footer />
     </div>
   );
 }
