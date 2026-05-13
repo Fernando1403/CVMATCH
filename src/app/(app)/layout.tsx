@@ -1,4 +1,6 @@
 import Link from "next/link";
+import Image from "next/image";
+import Logo from "@/images/Logo.png";
 import { UserCircle, Zap, LogOut, LayoutDashboard } from "lucide-react";
 import { Header } from "../../components/layout/Header";
 
@@ -10,8 +12,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         {/* Sidebar - hidden on mobile */}
         <aside className="hidden md:flex w-64 border-r border-border bg-secondary/30 flex-col z-20">
           <div className="h-20 flex items-center px-6 border-b border-border shrink-0">
-            <Link href="/dashboard" className="font-display font-bold text-xl tracking-tight text-white">
-              CVMatch<span className="text-accent">.AI</span>
+            <Link href="/dashboard" className="font-display font-bold text-xl tracking-tight text-white flex items-center gap-2">
+              <div className="relative w-7 h-7 flex items-center justify-center">
+                <Image 
+                  src={Logo} 
+                  alt="Logo" 
+                  width={28} 
+                  height={28} 
+                  className="object-contain"
+                />
+              </div>
+              <span className="leading-none">CVMatch<span className="text-accent">.AI</span></span>
             </Link>
           </div>
 
