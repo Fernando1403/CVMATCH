@@ -27,6 +27,8 @@ export const metadata: Metadata = {
   },
 };
 
+import { Providers } from "@/components/Providers";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -37,7 +39,9 @@ export default function RootLayout({
       lang="pt-BR"
       className={`${sora.variable} ${dmSans.variable} h-full antialiased dark`}
     >
-      <body className="min-h-full flex flex-col bg-background text-foreground font-body">{children}</body>
+      <body className="min-h-full flex flex-col bg-background text-foreground font-body">
+        <Providers>{children}</Providers>
+      </body>
     </html>
   );
 }

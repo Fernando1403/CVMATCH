@@ -1,10 +1,20 @@
+"use client";
+
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/images/Logo.png";
 import { UserCircle, Zap, LogOut, LayoutDashboard } from "lucide-react";
 import { Header } from "../../components/layout/Header";
+import { useSession, signOut } from "next-auth/react";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
+  const { data: session } = useSession();
+
+  const userPlan = (session as any)?.user?.plan || "Free";
+  const creditsUsed = (session as any)?.user?.credits_used || 0;
+  const creditsLimit = (session as any)?.user?.credits_limit || 2;
+  const creditsRemaining = creditsLimit - creditsUsed;
+
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
@@ -44,20 +54,36 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
           <div className="p-4 border-t border-border shrink-0">
             <div className="bg-card border border-border rounded-xl p-4 mb-4">
               <div className="flex items-center justify-between mb-2">
-                <span className="text-sm font-medium text-muted">Plano Free</span>
-                <span className="text-xs font-bold text-accent bg-accent/10 px-2 py-0.5 rounded-md">2 Créditos</span>
+                <span className="text-sm font-medium text-muted">Plano {userPlan}</span>
+                <span className="text-xs font-bold text-accent bg-accent/10 px-2 py-0.5 rounded-md">{creditsRemaining} Créditos</span>
               </div>
               <div className="w-full bg-secondary h-1.5 rounded-full overflow-hidden">
-                <div className="bg-accent h-full w-full" />
+                <div 
+                  className="bg-accent h-full transition-all duration-500" 
+                  style={{ width: `${(creditsRemaining / creditsLimit) * 100}%` }}
+                />
               </div>
-              <button className="w-full text-xs font-bold text-white mt-3 hover:text-accent transition-colors text-left">
-                Fazer Upgrade
+              <button 
+                onClick={async () => {
+                  try {
+                    const res = await fetch("/api/user/upgrade", { method: "POST" });
+                    if (res.ok) window.location.reload();
+                  } catch (err) {
+                    console.error("Erro no upgrade:", err);
+                  }
+                }}
+                className="block w-full text-xs font-bold text-white mt-3 hover:text-accent transition-colors text-left"
+              >
+                Fazer Upgrade (Teste)
               </button>
             </div>
-            <Link href="/" className="flex items-center gap-3 px-4 py-2 text-sm text-muted hover:text-white transition-colors w-full">
+            <button 
+              onClick={() => signOut({ callbackUrl: "/" })}
+              className="flex items-center gap-3 px-4 py-2 text-sm text-muted hover:text-white transition-colors w-full"
+            >
               <LogOut size={18} />
               Sair
-            </Link>
+            </button>
           </div>
         </aside>
 
