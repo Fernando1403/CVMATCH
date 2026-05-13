@@ -3,7 +3,7 @@ import { FileText, Download, Plus, Sparkles } from "lucide-react";
 
 export default function Dashboard() {
   return (
-    <div className="max-w-6xl mx-auto p-8 relative z-10 pt-16">
+    <div className="max-w-6xl mx-auto relative z-10">
       <header className="mb-10 flex flex-col md:flex-row md:items-center justify-between gap-4">
         <div>
           <h1 className="font-display text-3xl font-bold text-white mb-2">Seus Currículos</h1>
