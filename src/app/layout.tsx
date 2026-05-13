@@ -17,6 +17,14 @@ const dmSans = DM_Sans({
 export const metadata: Metadata = {
   title: "CVMatch.AI - Seu CV com match perfeito",
   description: "Gere um currículo otimizado em PDF, alinhado com a vaga desejada.",
+  icons: {
+    icon: [
+      { url: "/favicon.ico" },
+      { url: "/icon.png", type: "image/png" },
+    ],
+    shortcut: "/favicon.ico",
+    apple: "/apple-icon.png",
+  },
 };
 
 export default function RootLayout({
