@@ -8,17 +8,17 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="flex flex-col min-h-screen bg-background">
       <Header />
-      <div className="flex flex-1 overflow-hidden">
+      <div className="flex flex-1 overflow-hidden pt-20">
         {/* Sidebar - hidden on mobile */}
         <aside className="hidden md:flex w-64 border-r border-border bg-secondary/30 flex-col z-20">
           <div className="h-20 flex items-center px-6 border-b border-border shrink-0">
             <Link href="/dashboard" className="font-display font-bold text-xl tracking-tight text-white flex items-center gap-2">
               <div className="relative w-7 h-7 flex items-center justify-center">
-                <Image 
-                  src={Logo} 
-                  alt="Logo" 
-                  width={28} 
-                  height={28} 
+                <Image
+                  src={Logo}
+                  alt="Logo"
+                  width={28}
+                  height={28}
                   className="object-contain"
                 />
               </div>
@@ -62,7 +62,7 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto relative bg-background pt-20 md:pt-0">
+        <main className="flex-1 overflow-y-auto relative bg-background">
           <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-accent/5 to-transparent pointer-events-none" />
           <div className="p-4 md:p-8">
             {children}
