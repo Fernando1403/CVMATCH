@@ -1,9 +1,28 @@
+"use client";
+
 import Link from "next/link";
 import { ArrowRight, Sparkles, Check, X, Upload, FileText, Zap, BrainCircuit, Target, LayoutTemplate } from "lucide-react";
 import { Header } from "@/components/layout/Header";
 import { Footer } from "@/components/layout/Footer";
+import { useState } from "react";
+
+type Period = "mensal" | "trimestral" | "anual";
 
 export default function Home() {
+  const [period, setPeriod] = useState<Period>("mensal");
+
+  const prices = {
+    pro: {
+      mensal: "19,99",
+      trimestral: "16,99",
+      anual: "14,99",
+    },
+    premium: {
+      mensal: "49,99",
+      trimestral: "42,49",
+      anual: "37,49",
+    }
+  };
   return (
     <div className="flex flex-col min-h-screen bg-background overflow-x-hidden">
       <Header />
@@ -134,7 +153,33 @@ export default function Home() {
           <div className="max-w-7xl mx-auto px-6">
             <div className="text-center mb-12 md:mb-16">
               <h2 className="text-accent font-bold uppercase tracking-widest text-[10px] md:text-sm mb-4">Planos</h2>
-              <h3 className="font-display text-3xl md:text-5xl font-bold text-white">Escolha seu foguete</h3>
+              <h3 className="font-display text-3xl md:text-5xl font-bold text-white mb-8">Escolha seu foguete</h3>
+              
+              {/* Seletor de Período */}
+              <div className="flex justify-center mb-12">
+                <div className="bg-background p-1 rounded-xl border border-border flex items-center gap-1">
+                  <button 
+                    onClick={() => setPeriod("mensal")}
+                    className={`px-4 py-2 rounded-lg text-xs font-bold transition-all ${period === "mensal" ? "bg-accent text-background" : "text-muted hover:text-white"}`}
+                  >
+                    Mensal
+                  </button>
+                  <button 
+                    onClick={() => setPeriod("trimestral")}
+                    className={`px-4 py-2 rounded-lg text-xs font-bold transition-all relative ${period === "trimestral" ? "bg-accent text-background" : "text-muted hover:text-white"}`}
+                  >
+                    Trimestral
+                    <span className="absolute -top-2 -right-1 bg-green-500 text-[8px] text-white px-1.5 py-0.5 rounded-full">-15%</span>
+                  </button>
+                  <button 
+                    onClick={() => setPeriod("anual")}
+                    className={`px-4 py-2 rounded-lg text-xs font-bold transition-all relative ${period === "anual" ? "bg-accent text-background" : "text-muted hover:text-white"}`}
+                  >
+                    Anual
+                    <span className="absolute -top-2 -right-1 bg-green-500 text-[8px] text-white px-1.5 py-0.5 rounded-full">-25%</span>
+                  </button>
+                </div>
+              </div>
             </div>
             
             <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
@@ -156,7 +201,8 @@ export default function Home() {
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-background text-[10px] font-black uppercase tracking-widest px-4 py-1 rounded-full">Popular</div>
                 <h4 className="text-lg font-bold text-white mb-2">Pro</h4>
                 <div className="mb-6">
-                  <span className="text-3xl font-bold text-white">R$ 19,99</span>
+                  <span className="text-3xl font-bold text-white">R$ {prices.pro[period]}</span>
+                  <span className="text-muted text-xs">/mês</span>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm text-white"><Check size={18} className="text-accent" /> 25 CVs gerados</li>
@@ -170,7 +216,8 @@ export default function Home() {
               <div className="bg-card border border-border p-6 md:p-8 rounded-3xl flex flex-col hover:border-accent/20 transition-all order-3">
                 <h4 className="text-lg font-bold text-white mb-2">Premium</h4>
                 <div className="mb-6">
-                  <span className="text-3xl font-bold text-white">R$ 49,99</span>
+                  <span className="text-3xl font-bold text-white">R$ {prices.premium[period]}</span>
+                  <span className="text-muted text-xs">/mês</span>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm text-white"><Check size={18} className="text-accent" /> 200 CVs gerados</li>
