@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { FileText, Download, Plus, Sparkles, Loader2, Calendar } from "lucide-react";
+import { FileText, Download, Plus, Sparkles, Loader2, Calendar, Edit2 } from "lucide-react";
 import { useEffect, useState } from "react";
 import { supabase } from "@/lib/supabase";
 import { useSession } from "next-auth/react";
@@ -12,13 +12,46 @@ import { useRouter } from "next/navigation";
 export default function Dashboard() {
   const { data: session } = useSession();
   const { setResult } = useGenerate();
-  const { history, loading } = useUser();
+  const { history, loading, refreshUserData } = useUser();
   const router = useRouter();
+
+  const [editingId, setEditingId] = useState<string | null>(null);
+  const [newTitle, setNewTitle] = useState("");
+  const [isRenaming, setIsRenaming] = useState(false);
 
   const handleViewCV = (cv: any) => {
     // Salva no contexto global para a página de result carregar
     setResult(cv.cv_output);
     router.push("/result");
+  };
+
+  const startEditing = (e: React.MouseEvent, cv: any) => {
+    e.stopPropagation();
+    setEditingId(cv.id);
+    setNewTitle(cv.job_title);
+  };
+
+  const handleRename = async (e: React.FormEvent, id: string) => {
+    e.preventDefault();
+    e.stopPropagation();
+    if (!newTitle.trim()) return;
+
+    try {
+      setIsRenaming(true);
+      const res = await fetch("/api/cv/rename", {
+        method: "PATCH",
+        body: JSON.stringify({ id, newTitle }),
+      });
+
+      if (res.ok) {
+        await refreshUserData();
+        setEditingId(null);
+      }
+    } catch (err) {
+      console.error("Erro ao renomear:", err);
+    } finally {
+      setIsRenaming(false);
+    }
   };
 
   return (
@@ -51,9 +84,35 @@ export default function Dashboard() {
               </div>
               <div className="relative z-10 flex flex-col h-full">
                 <div>
-                  <div className="text-xs font-bold text-accent mb-4 tracking-wider uppercase truncate">
-                    {cv.job_title || 'CV Otimizado'}
-                  </div>
+                  {editingId === cv.id ? (
+                    <form 
+                      onSubmit={(e) => handleRename(e, cv.id)}
+                      className="mb-4"
+                      onClick={(e) => e.stopPropagation()}
+                    >
+                      <input 
+                        autoFocus
+                        type="text"
+                        value={newTitle}
+                        onChange={(e) => setNewTitle(e.target.value)}
+                        onBlur={() => setEditingId(null)}
+                        className="w-full bg-secondary border border-accent rounded-lg px-3 py-2 text-white focus:outline-none text-sm"
+                        disabled={isRenaming}
+                      />
+                    </form>
+                  ) : (
+                    <div className="flex items-center gap-2 group/title mb-4">
+                      <div className="text-xs font-bold text-accent tracking-widest uppercase truncate flex-1">
+                        {cv.job_title || 'CV Otimizado'}
+                      </div>
+                      <button 
+                        onClick={(e) => startEditing(e, cv)}
+                        className="p-1.5 hover:bg-secondary rounded-md text-muted/50 hover:text-accent transition-all"
+                      >
+                        <Edit2 size={14} />
+                      </button>
+                    </div>
+                  )}
                   <h3 className="font-display text-xl font-bold text-white mb-1 truncate">
                     {cv.company || 'Empresa não informada'}
                   </h3>
