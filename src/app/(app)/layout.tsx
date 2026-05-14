@@ -3,16 +3,61 @@
 import Link from "next/link";
 import Image from "next/image";
 import Logo from "@/images/Logo.png";
-import { UserCircle, Zap, LogOut, LayoutDashboard } from "lucide-react";
+import { UserCircle, Zap, LogOut, LayoutDashboard, Loader2 } from "lucide-react";
 import { Header } from "../../components/layout/Header";
 import { useSession, signOut } from "next-auth/react";
 
 import { useUser } from "@/context/UserContext";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const { userData } = useUser();
 
+  // 1. Carregando
+  if (status === "loading") {
+    return (
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
+        <Loader2 className="w-12 h-12 text-accent animate-spin mb-4" />
+        <p className="text-muted font-medium animate-pulse">Verificando sua conta...</p>
+      </div>
+    );
+  }
+
+  // 2. Não Logado - Tela de Acesso Negado
+  if (status === "unauthenticated") {
+    return (
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6 text-center relative overflow-hidden">
+        {/* Efeito de fundo */}
+        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-accent/10 rounded-full blur-[120px] pointer-events-none" />
+        
+        <div className="relative z-10 max-w-md bg-card border border-border p-10 rounded-3xl shadow-2xl">
+          <div className="w-20 h-20 bg-secondary rounded-2xl flex items-center justify-center mx-auto mb-8 border border-border">
+            <Zap className="text-accent w-10 h-10" />
+          </div>
+          <h1 className="font-display text-3xl font-bold text-white mb-4">Acesso Restrito</h1>
+          <p className="text-muted text-lg mb-10">
+            Você precisa estar logado para acessar as ferramentas mágicas do CVMatch.AI.
+          </p>
+          <div className="flex flex-col gap-4">
+            <Link 
+              href="/auth/login" 
+              className="bg-accent hover:bg-accent-hover text-background px-8 py-4 rounded-xl font-bold transition-all shadow-lg shadow-accent/20"
+            >
+              Fazer Login
+            </Link>
+            <Link 
+              href="/auth/cadastro" 
+              className="text-muted hover:text-white px-8 py-4 rounded-xl font-bold transition-all border border-border hover:bg-secondary"
+            >
+              Criar Conta Grátis
+            </Link>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // 3. Logado - Renderiza o App normalmente
   const userPlan = userData?.plan || (session as any)?.user?.plan || "Free";
   const creditsUsed = userData?.credits_used ?? (session as any)?.user?.credits_used ?? 0;
   const creditsLimit = userData?.credits_limit ?? (session as any)?.user?.credits_limit ?? 2;
