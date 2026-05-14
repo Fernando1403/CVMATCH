@@ -56,6 +56,20 @@ export default function Termos() {
                 Reservamo-nos o direito de modificar estes termos a qualquer momento. Notificaremos os usuários sobre mudanças significativas através da plataforma ou por e-mail. O uso continuado após as alterações indica a sua aceitação.
               </p>
             </div>
+
+            <div>
+              <h2 className="text-white font-display text-2xl font-bold mb-3">7. Assinaturas, Cancelamentos e Fidelidade</h2>
+              <p className="leading-relaxed">
+                Ao contratar um plano com desconto (Pacotes Trimestral ou Anual), o usuário usufrui de uma tarifa reduzida em troca de um compromisso de permanência pelo período contratado. 
+              </p>
+              <ul className="list-disc pl-6 mt-4 space-y-2">
+                <li><strong>Plano Trimestral:</strong> Em caso de cancelamento antecipado, será aplicada uma multa rescisória equivalente a 1 (uma) mensalidade integral do plano.</li>
+                <li><strong>Plano Anual:</strong> Em caso de cancelamento antecipado, será aplicada uma multa rescisória equivalente a 3 (três) mensalidades integrais do plano.</li>
+              </ul>
+              <p className="mt-4 leading-relaxed">
+                O cancelamento de planos Mensais pode ser feito a qualquer momento sem aplicação de multas, cessando o acesso às funcionalidades Pro/Premium ao final do período já pago.
+              </p>
+            </div>
           </div>
         </section>
       </main>
