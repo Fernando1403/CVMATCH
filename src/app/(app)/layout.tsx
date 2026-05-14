@@ -11,7 +11,7 @@ import { useUser } from "@/context/UserContext";
 
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { data: session, status } = useSession();
-  const { userData } = useUser();
+  const { userData, refreshUserData } = useUser();
 
   // 1. Carregando
   if (status === "loading") {
