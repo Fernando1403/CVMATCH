@@ -50,7 +50,7 @@ export default function Planos() {
                 <span className="text-muted text-lg">,99/mês</span>
               </div>
               <ul className="space-y-5 mb-10 flex-1">
-                <li className="flex items-center gap-3 text-white text-lg"><Check size={24} className="text-accent" /> 30 CVs gerados por IA</li>
+                <li className="flex items-center gap-3 text-white text-lg"><Check size={24} className="text-accent" /> 25 CVs gerados por IA</li>
                 <li className="flex items-center gap-3 text-white text-lg"><Check size={24} className="text-accent" /> Memória de Perfil</li>
                 <li className="flex items-center gap-3 text-white text-lg"><Check size={24} className="text-accent" /> Histórico ilimitado</li>
                 <li className="flex items-center gap-3 text-muted text-lg"><X size={24} /> Suporte prioritário</li>
@@ -60,22 +60,22 @@ export default function Planos() {
               </Link>
             </div>
 
-            {/* Pro Ilimitado */}
+            {/* Premium */}
             <div className="bg-card border border-border rounded-3xl p-10 flex flex-col hover:border-accent/30 transition-colors">
-              <h3 className="text-3xl font-display font-bold text-white mb-2">Ilimitado</h3>
-              <p className="text-muted mb-8 text-lg">Para agências e recrutadores</p>
+              <h3 className="text-3xl font-display font-bold text-white mb-2">Premium</h3>
+              <p className="text-muted mb-8 text-lg">Para profissionais e agências</p>
               <div className="mb-10">
-                <span className="text-5xl font-display font-bold text-white">R$ 39</span>
+                <span className="text-5xl font-display font-bold text-white">R$ 49</span>
                 <span className="text-muted text-lg">,99/mês</span>
               </div>
               <ul className="space-y-5 mb-10 flex-1">
-                <li className="flex items-center gap-3 text-white text-lg"><Check size={24} className="text-accent" /> CVs Ilimitados</li>
+                <li className="flex items-center gap-3 text-white text-lg"><Check size={24} className="text-accent" /> 200 CVs gerados por IA</li>
                 <li className="flex items-center gap-3 text-white text-lg"><Check size={24} className="text-accent" /> Memória de Perfil</li>
                 <li className="flex items-center gap-3 text-white text-lg"><Check size={24} className="text-accent" /> Histórico ilimitado</li>
                 <li className="flex items-center gap-3 text-white text-lg"><Check size={24} className="text-accent" /> Suporte prioritário</li>
               </ul>
               <Link href="/auth/cadastro" className="block text-center w-full bg-secondary hover:bg-border text-white border border-border py-4 rounded-xl font-bold transition-colors text-lg">
-                Assinar Ilimitado
+                Assinar Premium
               </Link>
             </div>
           </div>

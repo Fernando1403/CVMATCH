@@ -12,12 +12,12 @@ export async function POST() {
 
     const supabase = getSupabaseAdmin();
 
-    // Simulação de upgrade para o plano PRO com 30 créditos
+    // Simulação de upgrade para o plano PRO com 25 créditos
     const { data, error } = await supabase
       .from("users")
       .update({
-        plan: "pro",
-        credits_limit: 30,
+        plan: "Pro",
+        credits_limit: 25,
         credits_used: 0 // Resetamos o uso para teste
       })
       .eq("id", session.user.id)
