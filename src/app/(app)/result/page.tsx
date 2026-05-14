@@ -80,15 +80,15 @@ export default function Result() {
       `}</style>
 
       <header className="h-16 md:h-20 flex items-center justify-between px-4 md:px-8 border-b border-border flex-shrink-0 bg-background/80 backdrop-blur-md sticky top-0 z-40 print:hidden">
-        <div className="flex items-center gap-2">
-          <Link href="/dashboard" className="text-muted hover:text-white md:hidden p-2">
+        <div className="flex items-center gap-1 md:gap-2">
+          <Link href="/dashboard" className="text-muted hover:text-white md:hidden p-1">
             <ChevronLeft size={24} />
           </Link>
-          <h1 className="font-display text-lg font-bold text-white flex items-center gap-2">
-            <Sparkles className="text-accent hidden sm:block" size={20}/> CV Pronto!
+          <h1 className="font-display text-sm md:text-lg font-bold text-white flex items-center gap-2">
+            <Sparkles className="text-accent hidden sm:block" size={20}/> <span className="truncate max-w-[100px] sm:max-w-none">CV Pronto!</span>
           </h1>
         </div>
-        <div className="flex items-center gap-3 md:gap-6">
+        <div className="flex items-center gap-2 md:gap-6">
           <Link href="/dashboard" className="text-muted hover:text-white transition-colors font-medium text-sm hidden md:block flex items-center gap-2">
             <LayoutDashboard size={16} /> Dashboard
           </Link>

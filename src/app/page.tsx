@@ -10,25 +10,25 @@ export default function Home() {
 
       <main className="flex-grow">
         {/* Hero Section */}
-        <section className="pt-32 md:pt-44 pb-20 md:pb-32 relative overflow-hidden">
+        <section className="pt-24 md:pt-44 pb-16 md:pb-32 relative overflow-hidden">
           {/* Efeitos de luz de fundo */}
-          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] bg-accent/5 rounded-full blur-[120px] -z-10" />
+          <div className="absolute top-0 left-1/2 -translate-x-1/2 w-[600px] md:w-[1000px] h-[400px] md:h-[600px] bg-accent/5 rounded-full blur-[80px] md:blur-[120px] -z-10" />
           
           <div className="max-w-7xl mx-auto px-4 md:px-6 flex flex-col items-center text-center">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border mb-8 md:mb-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
-              <span className="flex h-2 w-2 md:h-2.5 md:w-2.5 rounded-full bg-accent animate-pulse"></span>
-              <span className="text-xs md:text-sm font-bold text-muted uppercase tracking-wide">2 CVs grátis para começar</span>
+            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-secondary border border-border mb-6 md:mb-10 animate-in fade-in slide-in-from-bottom-4 duration-700">
+              <span className="flex h-1.5 w-1.5 md:h-2.5 md:w-2.5 rounded-full bg-accent animate-pulse"></span>
+              <span className="text-[10px] md:text-sm font-bold text-muted uppercase tracking-wide">2 CVs grátis para começar</span>
             </div>
             
-            <h1 className="font-display text-4xl sm:text-5xl md:text-8xl font-bold max-w-5xl leading-[1.1] mb-6 md:mb-8 text-white animate-in fade-in slide-in-from-bottom-6 duration-1000">
+            <h1 className="font-display text-4xl sm:text-6xl md:text-8xl font-bold max-w-5xl leading-[1.1] mb-6 md:mb-8 text-white animate-in fade-in slide-in-from-bottom-6 duration-1000 px-4">
               Seu currículo com <span className="text-accent relative inline-block">
                 match perfeito
-                <div className="absolute -bottom-2 left-0 right-0 h-2 bg-accent/20 rounded-full blur-md"></div>
+                <div className="absolute -bottom-1 md:-bottom-2 left-0 right-0 h-1 md:h-2 bg-accent/20 rounded-full blur-md"></div>
               </span> para cada vaga.
             </h1>
             
-            <p className="text-lg md:text-2xl text-muted max-w-3xl mb-10 md:mb-14 leading-relaxed px-2 animate-in fade-in slide-in-from-bottom-8 duration-1000">
-              A inteligência artificial que entende sua trajetória e cria um PDF profissional otimizado para a vaga exata que você deseja. Aumente suas chances de entrevista.
+            <p className="text-base md:text-2xl text-muted max-w-3xl mb-8 md:mb-14 leading-relaxed px-4 animate-in fade-in slide-in-from-bottom-8 duration-1000">
+              A inteligência artificial que entende sua trajetória e cria um PDF profissional otimizado para a vaga exata que você deseja.
             </p>
             
             <div className="flex flex-col sm:row gap-4 md:gap-6 w-full max-w-md md:max-w-none justify-center animate-in fade-in slide-in-from-bottom-10 duration-1000">
@@ -130,50 +130,53 @@ export default function Home() {
         </section>
 
         {/* Pricing Summary */}
-        <section className="py-24 bg-secondary/20">
+        <section className="py-16 md:py-24 bg-secondary/20">
           <div className="max-w-7xl mx-auto px-6">
-            <div className="text-center mb-16">
-              <h2 className="text-accent font-bold uppercase tracking-widest text-sm mb-4">Planos</h2>
-              <h3 className="font-display text-4xl md:text-5xl font-bold text-white">Escolha seu foguete</h3>
+            <div className="text-center mb-12 md:mb-16">
+              <h2 className="text-accent font-bold uppercase tracking-widest text-[10px] md:text-sm mb-4">Planos</h2>
+              <h3 className="font-display text-3xl md:text-5xl font-bold text-white">Escolha seu foguete</h3>
             </div>
             
-            <div className="grid md:grid-cols-3 gap-8 max-w-5xl mx-auto">
-              <div className="bg-card border border-border p-8 rounded-3xl flex flex-col hover:border-accent/20 transition-all">
-                <h4 className="text-xl font-bold text-white mb-2">Free</h4>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-8 max-w-5xl mx-auto">
+              {/* Plano Free */}
+              <div className="bg-card border border-border p-6 md:p-8 rounded-3xl flex flex-col hover:border-accent/20 transition-all order-2 md:order-1">
+                <h4 className="text-lg font-bold text-white mb-2">Free</h4>
                 <div className="mb-6">
-                  <span className="text-4xl font-bold text-white">R$ 0</span>
+                  <span className="text-3xl font-bold text-white">R$ 0</span>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm text-muted"><Check size={18} className="text-accent" /> 2 CVs gerados</li>
                   <li className="flex items-center gap-2 text-sm text-muted"><Check size={18} className="text-accent" /> Memória de Perfil</li>
                 </ul>
-                <Link href="/auth/cadastro" className="w-full py-3 bg-secondary hover:bg-border text-white text-center rounded-xl font-bold transition-all">Começar</Link>
+                <Link href="/auth/cadastro" className="w-full py-4 bg-secondary hover:bg-border text-white text-center rounded-xl font-bold transition-all">Começar</Link>
               </div>
 
-              <div className="bg-card border-2 border-accent p-8 rounded-3xl flex flex-col relative scale-105 shadow-2xl shadow-accent/10">
+              {/* Plano Pro */}
+              <div className="bg-card border-2 border-accent p-6 md:p-8 rounded-3xl flex flex-col relative md:scale-105 shadow-2xl shadow-accent/10 order-1 md:order-2">
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-accent text-background text-[10px] font-black uppercase tracking-widest px-4 py-1 rounded-full">Popular</div>
-                <h4 className="text-xl font-bold text-white mb-2">Pro</h4>
+                <h4 className="text-lg font-bold text-white mb-2">Pro</h4>
                 <div className="mb-6">
-                  <span className="text-4xl font-bold text-white">R$ 19,99</span>
+                  <span className="text-3xl font-bold text-white">R$ 19,99</span>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm text-white"><Check size={18} className="text-accent" /> 25 CVs gerados</li>
                   <li className="flex items-center gap-2 text-sm text-white"><Check size={18} className="text-accent" /> Histórico Ilimitado</li>
                   <li className="flex items-center gap-2 text-sm text-muted"><X size={18} /> Suporte Prioritário</li>
                 </ul>
-                <Link href="/auth/cadastro" className="w-full py-3 bg-accent hover:bg-accent-hover text-background text-center rounded-xl font-bold transition-all shadow-lg shadow-accent/20">Assinar Pro</Link>
+                <Link href="/auth/cadastro" className="w-full py-4 bg-accent hover:bg-accent-hover text-background text-center rounded-xl font-bold transition-all shadow-lg shadow-accent/20">Assinar Pro</Link>
               </div>
 
-              <div className="bg-card border border-border p-8 rounded-3xl flex flex-col hover:border-accent/20 transition-all">
-                <h4 className="text-xl font-bold text-white mb-2">Premium</h4>
+              {/* Plano Premium */}
+              <div className="bg-card border border-border p-6 md:p-8 rounded-3xl flex flex-col hover:border-accent/20 transition-all order-3">
+                <h4 className="text-lg font-bold text-white mb-2">Premium</h4>
                 <div className="mb-6">
-                  <span className="text-4xl font-bold text-white">R$ 49,99</span>
+                  <span className="text-3xl font-bold text-white">R$ 49,99</span>
                 </div>
                 <ul className="space-y-4 mb-8 flex-1">
                   <li className="flex items-center gap-2 text-sm text-white"><Check size={18} className="text-accent" /> 200 CVs gerados</li>
                   <li className="flex items-center gap-2 text-sm text-white"><Check size={18} className="text-accent" /> Suporte Prioritário</li>
                 </ul>
-                <Link href="/auth/cadastro" className="w-full py-3 bg-secondary hover:bg-border text-white text-center rounded-xl font-bold transition-all">Assinar Premium</Link>
+                <Link href="/auth/cadastro" className="w-full py-4 bg-secondary hover:bg-border text-white text-center rounded-xl font-bold transition-all">Assinar Premium</Link>
               </div>
             </div>
             

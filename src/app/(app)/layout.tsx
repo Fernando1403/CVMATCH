@@ -79,8 +79,26 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
-      <Header />
-      <div className="flex flex-1 overflow-hidden pt-20">
+      {/* Desktop Header - Hidden on Mobile */}
+      <div className="hidden md:block">
+        <Header />
+      </div>
+
+      {/* Mobile Header - Simplified */}
+      <div className="md:hidden fixed top-0 w-full z-40 bg-background/80 backdrop-blur-md border-b border-border h-16 flex items-center justify-between px-4">
+        <Link href="/dashboard" className="font-display font-bold text-lg tracking-tight text-white flex items-center gap-2">
+          <Image src={Logo} alt="Logo" width={24} height={24} />
+          <span>CVMatch<span className="text-accent">.AI</span></span>
+        </Link>
+        <button 
+          onClick={() => signOut({ callbackUrl: "/" })}
+          className="p-2 text-muted hover:text-white"
+        >
+          <LogOut size={20} />
+        </button>
+      </div>
+
+      <div className="flex flex-1 overflow-hidden pt-16 md:pt-20">
         {/* Sidebar - hidden on mobile */}
         <aside className="hidden md:flex w-64 border-r border-border bg-secondary/30 flex-col z-20">
           <div className="h-20 flex items-center px-6 border-b border-border shrink-0">
@@ -154,13 +172,31 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
         </aside>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto relative bg-background">
+        <main className="flex-1 overflow-y-auto relative bg-background pb-24 md:pb-8">
           <div className="absolute top-0 left-0 right-0 h-64 bg-gradient-to-b from-accent/5 to-transparent pointer-events-none" />
           <div className="p-4 md:p-8">
             {children}
           </div>
         </main>
       </div>
+
+      {/* Bottom Navigation - Mobile Only */}
+      <nav className="md:hidden fixed bottom-0 w-full z-40 bg-card/80 backdrop-blur-xl border-t border-border flex justify-around items-center py-3 px-2 shadow-[0_-10px_30px_rgba(0,0,0,0.3)]">
+        <Link href="/dashboard" className="flex flex-col items-center gap-1 text-muted hover:text-accent transition-colors px-4">
+          <LayoutDashboard size={22} />
+          <span className="text-[10px] font-bold uppercase tracking-tighter">Início</span>
+        </Link>
+        <Link href="/generate" className="flex flex-col items-center gap-1 text-accent px-4 relative -top-6">
+          <div className="w-14 h-14 bg-accent rounded-full flex items-center justify-center shadow-lg shadow-accent/40 border-4 border-background">
+            <Zap size={24} className="fill-background text-background" />
+          </div>
+          <span className="text-[10px] font-bold uppercase tracking-tighter mt-1">Gerar CV</span>
+        </Link>
+        <Link href="/profile" className="flex flex-col items-center gap-1 text-muted hover:text-accent transition-colors px-4">
+          <UserCircle size={22} />
+          <span className="text-[10px] font-bold uppercase tracking-tighter">Perfil</span>
+        </Link>
+      </nav>
     </div>
   );
 }
