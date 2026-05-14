@@ -7,13 +7,30 @@ import { UserCircle, Zap, LogOut, LayoutDashboard } from "lucide-react";
 import { Header } from "../../components/layout/Header";
 import { useSession, signOut } from "next-auth/react";
 
+import { useUser } from "@/context/UserContext";
+
 export default function AppLayout({ children }: { children: React.ReactNode }) {
   const { data: session } = useSession();
+  const { userData } = useUser();
 
-  const userPlan = (session as any)?.user?.plan || "Free";
-  const creditsUsed = (session as any)?.user?.credits_used || 0;
-  const creditsLimit = (session as any)?.user?.credits_limit || 2;
+  const userPlan = userData?.plan || (session as any)?.user?.plan || "Free";
+  const creditsUsed = userData?.credits_used ?? (session as any)?.user?.credits_used ?? 0;
+  const creditsLimit = userData?.credits_limit ?? (session as any)?.user?.credits_limit ?? 2;
   const creditsRemaining = creditsLimit - creditsUsed;
+
+  const creditsPercent = (creditsRemaining / creditsLimit) * 100;
+  
+  // Lógica de cores baseada no uso
+  let colorClass = "bg-accent";
+  let textClass = "text-accent bg-accent/10";
+  
+  if (creditsPercent <= 20) {
+    colorClass = "bg-red-500";
+    textClass = "text-red-500 bg-red-500/10";
+  } else if (creditsPercent <= 60) {
+    colorClass = "bg-yellow-500";
+    textClass = "text-yellow-500 bg-yellow-500/10";
+  }
 
   return (
     <div className="flex flex-col min-h-screen bg-background">
@@ -55,19 +72,23 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
             <div className="bg-card border border-border rounded-xl p-4 mb-4">
               <div className="flex items-center justify-between mb-2">
                 <span className="text-sm font-medium text-muted">Plano {userPlan}</span>
-                <span className="text-xs font-bold text-accent bg-accent/10 px-2 py-0.5 rounded-md">{creditsRemaining} Créditos</span>
+                <span className={`text-xs font-bold px-2 py-0.5 rounded-md transition-colors duration-500 ${textClass}`}>
+                  {creditsRemaining} Créditos
+                </span>
               </div>
               <div className="w-full bg-secondary h-1.5 rounded-full overflow-hidden">
                 <div 
-                  className="bg-accent h-full transition-all duration-500" 
-                  style={{ width: `${(creditsRemaining / creditsLimit) * 100}%` }}
+                  className={`h-full transition-all duration-500 ${colorClass}`} 
+                  style={{ width: `${creditsPercent}%` }}
                 />
               </div>
               <button 
                 onClick={async () => {
                   try {
                     const res = await fetch("/api/user/upgrade", { method: "POST" });
-                    if (res.ok) window.location.reload();
+                    if (res.ok) {
+                      await refreshUserData();
+                    }
                   } catch (err) {
                     console.error("Erro no upgrade:", err);
                   }

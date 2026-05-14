@@ -51,7 +51,17 @@ ALTER TABLE public.user_profile ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.cv_history ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.vaga_cache ENABLE ROW LEVEL SECURITY;
 
--- IMPORTANTE: Como estamos usando NextAuth via Backend/Server-Side, 
--- não precisamos depender do RLS para consultas feitas pelo nosso servidor (que pode usar a SERVICE_ROLE key)
--- ou podemos criar políticas baseadas no auth.uid() SE fôssemos acessar o banco diretamente do Client.
--- Para manter o controle estrito na API, essas políticas previnem acesso anônimo da API pública do Supabase.
+-- Atualização da tabela de Histórico para suportar JSON do CV
+ALTER TABLE public.cv_history ADD COLUMN cv_output jsonb;
+
+-- Função para incremento atômico de créditos
+CREATE OR REPLACE FUNCTION increment_credits(user_id uuid)
+RETURNS void AS $$
+BEGIN
+  UPDATE public.users
+  SET credits_used = credits_used + 1
+  WHERE id = user_id;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- IMPORTANTE: Como estamos usando NextAuth via Backend/Server-Side...
