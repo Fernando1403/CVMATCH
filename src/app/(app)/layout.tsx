@@ -86,10 +86,16 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
 
       {/* Mobile Header - Simplified */}
       <div className="md:hidden fixed top-0 w-full z-40 bg-background/80 backdrop-blur-md border-b border-border h-16 flex items-center justify-between px-4">
-        <Link href="/dashboard" className="font-display font-bold text-lg tracking-tight text-white flex items-center gap-2">
-          <Image src={Logo} alt="Logo" width={24} height={24} />
-          <span>CVMatch<span className="text-accent">.AI</span></span>
-        </Link>
+        <div className="flex items-center gap-3">
+          <Link href="/dashboard" className="font-display font-bold text-lg tracking-tight text-white flex items-center gap-2">
+            <Image src={Logo} alt="Logo" width={24} height={24} />
+            <span>CVMatch<span className="text-accent">.AI</span></span>
+          </Link>
+          <div className={`px-2 py-0.5 rounded-full text-[10px] font-black border border-current flex items-center gap-1 ${textClass}`}>
+            <Zap size={10} className="fill-current" />
+            {creditsRemaining}
+          </div>
+        </div>
         <button 
           onClick={() => signOut({ callbackUrl: "/" })}
           className="p-2 text-muted hover:text-white"

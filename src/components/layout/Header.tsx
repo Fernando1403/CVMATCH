@@ -196,6 +196,19 @@ export function Header() {
                 >
                   <User size={18} /> Meu Perfil
                 </Link>
+                <div className="bg-secondary/30 p-4 rounded-2xl border border-border mt-2">
+                  <div className="flex justify-between items-center mb-2">
+                    <span className="text-xs font-bold text-muted uppercase tracking-widest">Seus Créditos</span>
+                    <span className="text-xs font-bold text-white">{(session as any).user?.credits_used || 0} / {(session as any).user?.credits_limit || 2}</span>
+                  </div>
+                  <div className="h-2 w-full bg-background rounded-full overflow-hidden border border-border">
+                    <div 
+                      className="h-full bg-accent transition-all duration-500" 
+                      style={{ width: `${Math.min((((session as any).user?.credits_used || 0) / ((session as any).user?.credits_limit || 2)) * 100, 100)}%` }}
+                    />
+                  </div>
+                </div>
+
                 <Link
                   href="/planos"
                   className="bg-accent/10 text-accent border border-accent/20 px-5 py-4 rounded-xl font-bold transition-colors text-center text-lg flex items-center justify-center gap-2"
