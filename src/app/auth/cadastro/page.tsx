@@ -11,6 +11,20 @@ export default function Cadastro() {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
+  const [cpf, setCpf] = useState("");
+
+  const handleCpfChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    let value = e.target.value.replace(/\D/g, ""); // Remove tudo que não é dígito
+    if (value.length > 11) value = value.slice(0, 11);
+    
+    // Aplica a máscara 000.000.000-00
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d)/, "$1.$2");
+    value = value.replace(/(\d{3})(\d{1,2})$/, "$1-$2");
+    
+    setCpf(value);
+  };
+
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
     setLoading(true);
@@ -20,12 +34,19 @@ export default function Cadastro() {
     const email = formData.get("email") as string;
     const password = formData.get("password") as string;
     const nome = formData.get("nome") as string;
+    const rawCpf = cpf.replace(/\D/g, "");
+
+    if (rawCpf.length !== 11) {
+      setError("CPF inválido. Por favor, insira os 11 dígitos.");
+      setLoading(false);
+      return;
+    }
 
     try {
       const response = await fetch("/api/auth/signup", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ email, password, nome }),
+        body: JSON.stringify({ email, password, nome, cpf: rawCpf }),
       });
 
       const data = await response.json();
@@ -34,19 +55,8 @@ export default function Cadastro() {
         throw new Error(data.error || "Erro ao criar conta.");
       }
 
-      // Se o cadastro deu certo, faz login automaticamente
-      const result = await signIn("credentials", {
-        email,
-        password,
-        redirect: false,
-      });
-
-      if (result?.error) {
-        setError("Conta criada, mas erro ao fazer login. Tente entrar manualmente.");
-        router.push("/auth/login");
-      } else {
-        router.push("/dashboard");
-      }
+      // Redireciona para a tela de verificação passando o e-mail
+      router.push(`/auth/verify?email=${encodeURIComponent(email)}`);
     } catch (err: any) {
       setError(err.message);
     } finally {
@@ -71,7 +81,7 @@ export default function Cadastro() {
         <div className="bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-8 shadow-2xl">
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
             {error && (
-              <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-sm p-3 rounded-xl text-center">
+              <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-sm p-3 rounded-xl text-center animate-in fade-in slide-in-from-top-2">
                 {error}
               </div>
             )}
@@ -82,6 +92,18 @@ export default function Cadastro() {
                 type="text" 
                 required
                 placeholder="João da Silva" 
+                className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" 
+              />
+            </div>
+            <div>
+              <label className="block text-sm font-medium text-muted mb-2">CPF</label>
+              <input 
+                name="cpf"
+                type="text" 
+                required
+                value={cpf}
+                onChange={handleCpfChange}
+                placeholder="000.000.000-00" 
                 className="w-full bg-secondary border border-border rounded-xl px-4 py-3 text-white focus:outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/50 transition-all" 
               />
             </div>

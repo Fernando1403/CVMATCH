@@ -2,6 +2,8 @@
 CREATE TABLE public.users (
   id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
   email text UNIQUE NOT NULL,
+  name text, -- Nome real do usuário
+  cpf text UNIQUE NOT NULL, -- Identificador único para evitar múltiplas contas
   password_hash text,
   plan text DEFAULT 'free', -- 'free' | 'pro' | 'pro_unlimited'
   credits_used integer DEFAULT 0,
@@ -63,5 +65,19 @@ BEGIN
   WHERE id = user_id;
 END;
 $$ LANGUAGE plpgsql SECURITY DEFINER;
+
+-- Adicionar coluna de verificação na tabela users
+ALTER TABLE public.users ADD COLUMN email_verified timestamp with time zone;
+
+-- Criação da tabela de Códigos de Verificação
+CREATE TABLE public.verification_codes (
+  id uuid DEFAULT gen_random_uuid() PRIMARY KEY,
+  email text NOT NULL,
+  code text NOT NULL,
+  type text NOT NULL, -- 'signup' | 'password_reset'
+  payload jsonb,      -- Dados temporários do usuário (nome, senha, cpf, etc)
+  expires_at timestamp with time zone NOT NULL,
+  created_at timestamp with time zone DEFAULT timezone('utc'::text, now()) NOT NULL
+);
 
 -- IMPORTANTE: Como estamos usando NextAuth via Backend/Server-Side...

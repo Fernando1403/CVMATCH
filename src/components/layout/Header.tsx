@@ -81,8 +81,8 @@ export function Header() {
                   <div className="w-9 h-9 rounded-full bg-secondary border border-border flex items-center justify-center group-hover:border-accent/50 transition-all">
                     <User size={20} className="text-muted group-hover:text-accent" />
                   </div>
-                  <div className="flex flex-col items-start">
-                    <span className="text-sm font-bold leading-tight">{session.user?.email?.split('@')[0]}</span>
+                   <div className="flex flex-col items-start">
+                    <span className="text-sm font-bold leading-tight">{session.user?.name || session.user?.email?.split('@')[0]}</span>
                     <span className="text-[10px] text-muted uppercase tracking-wider font-bold">Plano {(session as any).user?.plan || 'Free'}</span>
                   </div>
                   <ChevronDown size={16} className={`text-muted transition-transform duration-300 ${isUserMenuOpen ? 'rotate-180' : ''}`} />
@@ -185,7 +185,7 @@ export function Header() {
                     <User size={24} className="text-muted" />
                   </div>
                   <div>
-                    <p className="font-bold text-white">{session.user?.email?.split('@')[0]}</p>
+                    <p className="font-bold text-white">{session.user?.name || session.user?.email?.split('@')[0]}</p>
                     <p className="text-xs text-muted uppercase font-bold">Plano {(session as any).user?.plan || 'Free'}</p>
                   </div>
                 </div>

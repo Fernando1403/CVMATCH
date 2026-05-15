@@ -44,6 +44,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
         return {
           id: user.id,
           email: user.email,
+          name: user.name, // Adicionando o nome
           plan: user.plan,
           credits_used: user.credits_used,
           credits_limit: user.credits_limit
@@ -56,9 +57,10 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
   },
   callbacks: {
     // Adicionamos as propriedades extras (plano, créditos) no token
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger, session }) {
       if (user) {
         token.id = user.id;
+        token.name = user.name;
         token.plan = (user as any).plan;
         token.credits_used = (user as any).credits_used;
         token.credits_limit = (user as any).credits_limit;
@@ -69,6 +71,7 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
     async session({ session, token }) {
       if (session.user) {
         session.user.id = token.id as string;
+        session.user.name = token.name as string;
         (session.user as any).plan = token.plan;
         (session.user as any).credits_used = token.credits_used;
         (session.user as any).credits_limit = token.credits_limit;
