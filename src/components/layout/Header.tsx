@@ -45,33 +45,13 @@ export function Header() {
         <div className="hidden md:flex items-center gap-4">
           {status === "authenticated" ? (
             <div className="flex items-center gap-6">
-              <button 
-                onClick={async () => {
-                  try {
-                    const res = await fetch("/api/user/upgrade", { method: "POST" });
-                    if (res.ok) {
-                      const data = await res.json();
-                      // Atualiza a sessão local com os novos dados
-                      await update({
-                        ...session,
-                        user: {
-                          ...session?.user,
-                          plan: data.user.plan,
-                          credits_used: data.user.credits_used,
-                          credits_limit: data.user.credits_limit
-                        }
-                      });
-                      window.location.reload(); 
-                    }
-                  } catch (err) {
-                    console.error("Erro no upgrade:", err);
-                  }
-                }}
-                className="flex items-center gap-2 bg-accent/10 hover:bg-accent/20 text-accent px-4 py-2 rounded-full text-sm font-bold border border-accent/20 transition-all group"
+              <Link 
+                href="/planos"
+                className="flex items-center gap-2 text-accent hover:text-white px-4 py-2 rounded-full text-sm font-bold transition-all group"
               >
-                <Zap size={14} className="fill-accent group-hover:scale-110 transition-transform" />
-                Upgrade (Teste)
-              </button>
+                <Zap size={14} className="fill-accent group-hover:fill-white transition-colors" />
+                Fazer Upgrade
+              </Link>
               
               <div className="relative">
                 <button 

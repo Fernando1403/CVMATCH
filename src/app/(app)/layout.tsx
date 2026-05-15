@@ -151,21 +151,12 @@ export default function AppLayout({ children }: { children: React.ReactNode }) {
                   style={{ width: `${creditsPercent}%` }}
                 />
               </div>
-              <button 
-                onClick={async () => {
-                  try {
-                    const res = await fetch("/api/user/upgrade", { method: "POST" });
-                    if (res.ok) {
-                      await refreshUserData();
-                    }
-                  } catch (err) {
-                    console.error("Erro no upgrade:", err);
-                  }
-                }}
-                className="block w-full text-xs font-bold text-white mt-3 hover:text-accent transition-colors text-left"
+              <Link 
+                href="/planos"
+                className="block w-full text-xs font-bold text-accent mt-3 hover:text-white transition-colors text-left flex items-center gap-1"
               >
-                Fazer Upgrade (Teste)
-              </button>
+                <Zap size={10} className="fill-accent" /> Fazer Upgrade
+              </Link>
             </div>
             <button 
               onClick={() => signOut({ callbackUrl: "/" })}
