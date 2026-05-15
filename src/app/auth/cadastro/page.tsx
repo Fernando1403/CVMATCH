@@ -2,11 +2,11 @@
 
 import Link from "next/link";
 import { ArrowRight, Sparkles, Loader2, Zap } from "lucide-react";
-import { useState } from "react";
+import { useState, Suspense } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
-export default function Cadastro() {
+function CadastroForm() {
   const router = useRouter();
   const searchParams = useSearchParams();
   const message = searchParams.get("message");
@@ -154,5 +154,18 @@ export default function Cadastro() {
         </p>
       </div>
     </div>
+  );
+}
+
+export default function Cadastro() {
+  return (
+    <Suspense fallback={
+      <div className="min-h-screen bg-background flex flex-col items-center justify-center p-6">
+        <Loader2 className="w-12 h-12 text-accent animate-spin mb-4" />
+        <p className="text-muted font-medium animate-pulse">Carregando...</p>
+      </div>
+    }>
+      <CadastroForm />
+    </Suspense>
   );
 }
