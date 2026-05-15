@@ -5,7 +5,9 @@ export async function GET(request: Request) {
   const session = await auth();
   
   if (!session?.user) {
-    return NextResponse.json({ error: "Você precisa estar logado para assinar um plano." }, { status: 401 });
+    const url = new URL("/auth/cadastro", request.url);
+    url.searchParams.append("message", "Crie sua conta para assinar o plano escolhido e começar a usar!");
+    return NextResponse.redirect(url.toString());
   }
 
   const { searchParams } = new URL(request.url);

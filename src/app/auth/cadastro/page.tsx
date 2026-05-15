@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, Sparkles, Loader2 } from "lucide-react";
+import { ArrowRight, Sparkles, Loader2, Zap } from "lucide-react";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { signIn } from "next-auth/react";
 
 export default function Cadastro() {
   const router = useRouter();
+  const searchParams = useSearchParams();
+  const message = searchParams.get("message");
+  
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
@@ -80,6 +83,14 @@ export default function Cadastro() {
 
         <div className="bg-card/50 backdrop-blur-xl border border-border rounded-2xl p-8 shadow-2xl">
           <form className="flex flex-col gap-5" onSubmit={handleSubmit}>
+            {message && !error && (
+              <div className="bg-accent/10 border border-accent/20 text-accent text-sm p-4 rounded-xl text-center flex flex-col gap-1">
+                <span className="font-bold flex items-center justify-center gap-1">
+                   <Zap size={14} className="fill-accent" /> Quase lá!
+                </span>
+                {message}
+              </div>
+            )}
             {error && (
               <div className="bg-red-500/10 border border-red-500/20 text-red-500 text-sm p-3 rounded-xl text-center animate-in fade-in slide-in-from-top-2">
                 {error}
