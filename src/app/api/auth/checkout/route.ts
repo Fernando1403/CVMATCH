@@ -18,14 +18,14 @@ export async function GET(request: Request) {
     return NextResponse.json({ error: "Plano e período são obrigatórios." }, { status: 400 });
   }
 
-  // Mapeamento dos IDs das ofertas conforme o .env
+  // Mapeamento dos IDs das ofertas conforme o .env (Ajustado para o português do frontend)
   const offerKeys: Record<string, string | undefined> = {
-    "pro_monthly": process.env.CAKTO_OFFER_PRO_MONTHLY,
-    "pro_quarterly": process.env.CAKTO_OFFER_PRO_QUARTERLY,
-    "pro_annual": process.env.CAKTO_OFFER_PRO_ANNUAL,
-    "premium_monthly": process.env.CAKTO_OFFER_PREMIUM_MONTHLY,
-    "premium_quarterly": process.env.CAKTO_OFFER_PREMIUM_QUARTERLY,
-    "premium_annual": process.env.CAKTO_OFFER_PREMIUM_ANNUAL,
+    "pro_mensal": process.env.CAKTO_OFFER_PRO_MONTHLY,
+    "pro_trimestral": process.env.CAKTO_OFFER_PRO_QUARTERLY,
+    "pro_anual": process.env.CAKTO_OFFER_PRO_ANNUAL,
+    "premium_mensal": process.env.CAKTO_OFFER_PREMIUM_MONTHLY,
+    "premium_trimestral": process.env.CAKTO_OFFER_PREMIUM_QUARTERLY,
+    "premium_anual": process.env.CAKTO_OFFER_PREMIUM_ANNUAL,
   };
 
   const key = `${plan.toLowerCase()}_${period.toLowerCase()}`;
