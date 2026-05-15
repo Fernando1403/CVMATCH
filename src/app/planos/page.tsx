@@ -103,9 +103,12 @@ export default function Planos() {
                 <li className="flex items-center gap-3 text-white"><Check size={24} className="text-accent" /> Histórico ilimitado</li>
                 <li className="flex items-center gap-3 text-muted opacity-50"><X size={24} /> Suporte prioritário</li>
               </ul>
-              <Link href="/auth/cadastro" className="block text-center w-full bg-accent hover:bg-accent-hover text-background py-4 rounded-xl font-bold transition-colors shadow-[0_0_20px_rgba(0,200,151,0.2)]">
+              <a 
+                href={`/api/auth/checkout?plan=pro&period=${period}`} 
+                className="block text-center w-full bg-accent hover:bg-accent-hover text-background py-4 rounded-xl font-bold transition-colors shadow-[0_0_20px_rgba(0,200,151,0.2)]"
+              >
                 Assinar Pro
-              </Link>
+              </a>
             </div>
 
             {/* Premium */}
@@ -124,9 +127,12 @@ export default function Planos() {
                 <li className="flex items-center gap-3 text-white"><Check size={24} className="text-accent" /> Memória de Perfil</li>
                 <li className="flex items-center gap-3 text-white"><Check size={24} className="text-accent" /> Suporte prioritário</li>
               </ul>
-              <Link href="/auth/cadastro" className="block text-center w-full bg-secondary hover:bg-border text-white border border-border py-4 rounded-xl font-bold transition-colors">
+              <a 
+                href={`/api/auth/checkout?plan=premium&period=${period}`} 
+                className="block text-center w-full bg-secondary hover:bg-border text-white border border-border py-4 rounded-xl font-bold transition-colors"
+              >
                 Assinar Premium
-              </Link>
+              </a>
             </div>
           </div>
         </section>
